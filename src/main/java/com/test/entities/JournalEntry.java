@@ -8,7 +8,6 @@ import javax.persistence.Id;
 public class JournalEntry {
 	
 	@Id
-	@GeneratedValue
 	private int id;
 	private String title;
 	private String category;
@@ -37,7 +36,7 @@ public class JournalEntry {
 	}	
 	@Override
 	public String toString() {
-		return "JournalEntry [id=" + id + ", title=" + title + ", category=" + category + "]";
+		return "\"JournalEntry\": {\"id\":" + id + ", \"title\":\"" + title + "\", \"category\":\"" + category + "\"}";
 	}
 }
 

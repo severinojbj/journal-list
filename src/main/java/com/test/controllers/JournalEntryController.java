@@ -27,7 +27,9 @@ public class JournalEntryController {
 	// Create and Update
 	@RequestMapping("/addEntry")
 	public String addJournalEntry(JournalEntry entry) {
-
+		List<JournalEntry> entries = repo.findAll();
+		int id = entries.size();
+		entry.setId(id + 1);
 		repo.save(entry);
 		return "home";
 	}
@@ -36,7 +38,12 @@ public class JournalEntryController {
 	@RequestMapping("/getAllEntries")
 	public ModelAndView getAllJournalEntries() {
 		ModelAndView mv = new ModelAndView();
-		List<JournalEntry> entries = repo.findAll();
+		List<JournalEntry> entriesList = repo.findAll();
+		String entries = "{";
+		for (JournalEntry entry: entriesList) {
+			entries += entry.toString() + ",";
+		}
+		entries += "}";
 		mv.addObject("entries", entries);
 		mv.setViewName("getAllEntries");
 
