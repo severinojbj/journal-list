@@ -24,6 +24,21 @@ public class JournalEntryController {
 
 	// **************************Basic CRUD Operations***********************
 
+
+	private String convert2JSONEntries (List<JournalEntry> entriesList) {
+		String entries = "{";
+		if (entriesList.size() > 0) {
+			for (JournalEntry entry: entriesList) {
+				entries += entry.toString() + ",";
+			}
+			entries = entries.substring(0,entries.length() -1) + "}";
+		}
+		else {
+			entries += "}";
+		}
+		return entries;
+	}
+
 	// Create and Update
 	@RequestMapping("/addEntry")
 	public String addJournalEntry(JournalEntry entry) {
@@ -39,11 +54,7 @@ public class JournalEntryController {
 	public ModelAndView getAllJournalEntries() {
 		ModelAndView mv = new ModelAndView();
 		List<JournalEntry> entriesList = repo.findAll();
-		String entries = "{";
-		for (JournalEntry entry: entriesList) {
-			entries += entry.toString() + ",";
-		}
-		entries += "}";
+		String entries = this.convert2JSONEntries(entriesList);
 		mv.addObject("entries", entries);
 		mv.setViewName("getAllEntries");
 
@@ -76,9 +87,10 @@ public class JournalEntryController {
 	public ModelAndView getEntriesByCategory(@RequestParam String category) {
 
 		ModelAndView mv = new ModelAndView();
-		List<JournalEntry> entries = repo.findByCategory(category);
+		List<JournalEntry> entriesList = repo.findByCategory(category);
+		String entries = this.convert2JSONEntries(entriesList);
 		mv.addObject("entries", entries);
-		mv.setViewName("getEntriesByCategory");
+		mv.setViewName("getAllEntries");
 		return mv;
 
 	}
@@ -88,9 +100,10 @@ public class JournalEntryController {
 	public ModelAndView getEntriesByIdGT(@RequestParam int id) {
 
 		ModelAndView mv = new ModelAndView();
-		List<JournalEntry> entries = repo.findByIdGreaterThan(id);
+		List<JournalEntry> entriesList = repo.findByIdGreaterThan(id);
+		String entries = this.convert2JSONEntries(entriesList);
 		mv.addObject("entries", entries);
-		mv.setViewName("getEntriesByIdGT");
+		mv.setViewName("getAllEntries");
 		return mv;
 
 	}
@@ -100,10 +113,11 @@ public class JournalEntryController {
 	public ModelAndView getEntriesByCategorySorted(@RequestParam String category) {
 
 		ModelAndView mv = new ModelAndView();
-		List<JournalEntry> entries = repo.findByCategorySorted(category);
+		List<JournalEntry> entriesList = repo.findByCategorySorted(category);
 		System.out.println(repo.findByCategorySorted(category));
+		String entries = this.convert2JSONEntries(entriesList);
 		mv.addObject("entries", entries);
-		mv.setViewName("getEntriesByCategorySorted");
+		mv.setViewName("getAllEntries");
 		return mv;
 
 	}

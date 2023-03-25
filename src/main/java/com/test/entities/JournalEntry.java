@@ -1,7 +1,6 @@
 package com.test.entities;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
@@ -36,7 +35,7 @@ public class JournalEntry {
 	}	
 	@Override
 	public String toString() {
-		return "\"JournalEntry\": {\"id\":" + id + ", \"title\":\"" + title + "\", \"category\":\"" + category + "\"}";
+		return "\"JournalEntry\": {\"id\": " + id + ", \"title\": \"" + title + "\", \"category\": \"" + category + "\"}";
 	}
 }
 
